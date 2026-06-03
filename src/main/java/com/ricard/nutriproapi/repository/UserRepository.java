@@ -1,9 +1,11 @@
 package com.ricard.nutriproapi.repository;
 
-import com.ricard.nutriproapi.model.User;
 import java.util.Optional;
+
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
+
+import com.ricard.nutriproapi.model.User;
 
 /**
  * Repositorio JPA para la entidad User.

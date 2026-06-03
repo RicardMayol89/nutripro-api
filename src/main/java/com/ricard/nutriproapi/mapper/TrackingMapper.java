@@ -1,10 +1,11 @@
 package com.ricard.nutriproapi.mapper;
 
+import org.springframework.stereotype.Component;
+
 import com.ricard.nutriproapi.dto.request.TrackingRequest;
 import com.ricard.nutriproapi.dto.response.TrackingResponse;
 import com.ricard.nutriproapi.model.TrackingEntry;
 import com.ricard.nutriproapi.model.User;
-import org.springframework.stereotype.Component;
 
 /**
  * Convierte entre entidad TrackingEntry y DTOs de seguimiento.
