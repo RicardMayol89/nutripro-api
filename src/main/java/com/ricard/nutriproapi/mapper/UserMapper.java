@@ -1,9 +1,10 @@
 package com.ricard.nutriproapi.mapper;
 
+import org.springframework.stereotype.Component;
+
 import com.ricard.nutriproapi.dto.request.UserRequest;
 import com.ricard.nutriproapi.dto.response.UserResponse;
 import com.ricard.nutriproapi.model.User;
-import org.springframework.stereotype.Component;
 
 /**
  * Convierte entre entidad User y DTOs de usuario.
