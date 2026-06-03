@@ -9,8 +9,10 @@ import com.ricard.nutriproapi.repository.UserRepository;
 import java.util.List;
 import java.util.stream.Collectors;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.server.ResponseStatusException;
 
 /**
  * Servicio encargado de la lógica de negocio relacionada con los usuarios.
@@ -36,6 +38,9 @@ public class UserService {
     }
 
     public UserResponse create(UserRequest request) {
+        if (userRepository.findByEmail(request.getEmail()).isPresent()) {
+            throw new ResponseStatusException(HttpStatus.CONFLICT, "Email already exists");
+        }
         User user = userMapper.toEntity(request);
         User saved = userRepository.save(user);
         return userMapper.toResponse(saved);

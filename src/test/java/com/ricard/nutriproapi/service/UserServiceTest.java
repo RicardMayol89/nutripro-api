@@ -11,6 +11,8 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
+import org.springframework.http.HttpStatus;
+import org.springframework.web.server.ResponseStatusException;
 import static org.mockito.ArgumentMatchers.any;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
@@ -137,6 +139,17 @@ class UserServiceTest {
         assertNotNull(response);
         assertEquals("John", response.getFirstName());
         verify(userRepository, times(1)).save(any(User.class));
+    }
+
+    @Test
+    void testCreateDuplicateEmail() {
+        when(userRepository.findByEmail("john@example.com")).thenReturn(Optional.of(testUser));
+
+        ResponseStatusException exception = assertThrows(ResponseStatusException.class, () -> userService.create(userRequest));
+
+        assertEquals(HttpStatus.CONFLICT, exception.getStatusCode());
+        assertEquals("Email already exists", exception.getReason());
+        verify(userRepository, never()).save(any(User.class));
     }
 
     @Test
