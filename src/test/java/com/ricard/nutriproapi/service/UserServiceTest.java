@@ -44,6 +44,7 @@ class UserServiceTest {
     private UserResponse userResponse;
 
     @BeforeEach
+    @SuppressWarnings("unused")
     void setUp() {
         testUser = User.builder()
                 .id(1L)
@@ -109,9 +110,10 @@ class UserServiceTest {
     void testFindByIdNotFound() {
         when(userRepository.findById(999L)).thenReturn(Optional.empty());
 
-        assertThrows(ResourceNotFoundException.class, () -> {
+        ResourceNotFoundException exception = assertThrows(ResourceNotFoundException.class, () -> {
             userService.findById(999L);
         });
+        assertNotNull(exception);
 
         verify(userRepository, times(1)).findById(999L);
     }
@@ -154,9 +156,10 @@ class UserServiceTest {
     void testUpdateNotFound() {
         when(userRepository.findById(999L)).thenReturn(Optional.empty());
 
-        assertThrows(ResourceNotFoundException.class, () -> {
+        ResourceNotFoundException exception = assertThrows(ResourceNotFoundException.class, () -> {
             userService.update(999L, userRequest);
         });
+        assertNotNull(exception);
 
         verify(userRepository, never()).save(any(User.class));
     }
@@ -174,9 +177,10 @@ class UserServiceTest {
     void testDeleteNotFound() {
         when(userRepository.findById(999L)).thenReturn(Optional.empty());
 
-        assertThrows(ResourceNotFoundException.class, () -> {
+        ResourceNotFoundException exception = assertThrows(ResourceNotFoundException.class, () -> {
             userService.delete(999L);
         });
+        assertNotNull(exception);
 
         verify(userRepository, never()).delete(any(User.class));
     }

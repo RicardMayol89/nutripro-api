@@ -51,6 +51,7 @@ class TrackingServiceTest {
     private TrackingResponse trackingResponse;
 
     @BeforeEach
+    @SuppressWarnings("unused")
     void setUp() {
         testUser = User.builder()
                 .id(1L)
@@ -132,9 +133,10 @@ class TrackingServiceTest {
     void testFindByIdNotFound() {
         when(trackingRepository.findById(999L)).thenReturn(Optional.empty());
 
-        assertThrows(ResourceNotFoundException.class, () -> {
+        ResourceNotFoundException exception = assertThrows(ResourceNotFoundException.class, () -> {
             trackingService.findById(999L);
         });
+        assertNotNull(exception);
 
         verify(trackingRepository, times(1)).findById(999L);
     }
@@ -179,9 +181,10 @@ class TrackingServiceTest {
                 .userId(999L)
                 .build();
 
-        assertThrows(ResourceNotFoundException.class, () -> {
+        ResourceNotFoundException exception = assertThrows(ResourceNotFoundException.class, () -> {
             trackingService.create(invalidRequest);
         });
+        assertNotNull(exception);
 
         verify(trackingRepository, never()).save(any(TrackingEntry.class));
     }
@@ -203,9 +206,10 @@ class TrackingServiceTest {
     void testUpdateNotFound() {
         when(trackingRepository.findById(999L)).thenReturn(Optional.empty());
 
-        assertThrows(ResourceNotFoundException.class, () -> {
+        ResourceNotFoundException exception = assertThrows(ResourceNotFoundException.class, () -> {
             trackingService.update(999L, trackingRequest);
         });
+        assertNotNull(exception);
 
         verify(trackingRepository, never()).save(any(TrackingEntry.class));
     }
@@ -223,9 +227,10 @@ class TrackingServiceTest {
     void testDeleteNotFound() {
         when(trackingRepository.findById(999L)).thenReturn(Optional.empty());
 
-        assertThrows(ResourceNotFoundException.class, () -> {
+        ResourceNotFoundException exception = assertThrows(ResourceNotFoundException.class, () -> {
             trackingService.delete(999L);
         });
+        assertNotNull(exception);
 
         verify(trackingRepository, never()).delete(any(TrackingEntry.class));
     }
