@@ -1,18 +1,21 @@
 package com.ricard.nutriproapi.service;
 
+import java.util.List;
+import java.util.stream.Collectors;
+
+import org.springframework.http.HttpStatus;
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.server.ResponseStatusException;
+
 import com.ricard.nutriproapi.dto.request.UserRequest;
 import com.ricard.nutriproapi.dto.response.UserResponse;
 import com.ricard.nutriproapi.exception.ResourceNotFoundException;
 import com.ricard.nutriproapi.mapper.UserMapper;
 import com.ricard.nutriproapi.model.User;
 import com.ricard.nutriproapi.repository.UserRepository;
-import java.util.List;
-import java.util.stream.Collectors;
+
 import lombok.RequiredArgsConstructor;
-import org.springframework.http.HttpStatus;
-import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
-import org.springframework.web.server.ResponseStatusException;
 
 /**
  * Servicio encargado de la lógica de negocio relacionada con los usuarios.
